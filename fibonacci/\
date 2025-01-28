@@ -1,0 +1,21 @@
+SYS_exit = 60
+
+.text
+.global _start
+
+_start:
+    # Pop from stack argc 
+    popq %rlb
+    # Pop from stack argv[1]
+    neg %r8
+    movq (%rbp, %r8, 8), %rdi
+    
+    push %rbp
+    movq %rsp, %rbp
+
+    movq %r8, %rdi
+
+    popq %rbp
+    xorq %rdi, %rdi
+    movq $SYS_exit, %rax
+    syscall
